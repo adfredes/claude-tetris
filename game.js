@@ -4,16 +4,18 @@ const COLS = 10;
 const ROWS = 20;
 const BLOCK = 30;
 
-const COLORS = [
-  null,
-  '#4dd0e1', // I - cyan
-  '#ffd54f', // O - yellow
-  '#ba68c8', // T - purple
-  '#81c784', // S - green
-  '#e57373', // Z - red
-  '#42a5f5', // J - blue
-  '#ffb74d', // L - orange
-];
+const SKIN_COLORS = {
+  retro:  [null, '#4dd0e1','#ffd54f','#ba68c8','#81c784','#e57373','#42a5f5','#ffb74d','#90a4ae'],
+  neon:   [null, '#00fff7','#ffe600','#ff00ff','#00ff88','#ff3366','#3399ff','#ff9900','#aaaaff'],
+  pastel: [null, '#a8e6cf','#ffd3b6','#d4a5f5','#b5ead7','#ffb7b2','#b5c8f5','#ffc8a2','#c9c9e0'],
+  pixel:  [null, '#4dd0e1','#ffd54f','#ba68c8','#81c784','#e57373','#42a5f5','#ffb74d','#90a4ae'],
+};
+
+let currentSkin = 'retro';
+
+function getColors() {
+  return SKIN_COLORS[currentSkin];
+}
 
 const PIECES = [
   null,
@@ -160,13 +162,37 @@ function updateHUD() {
 
 function drawBlock(context, x, y, colorIndex, size, alpha) {
   if (!colorIndex) return;
-  const color = COLORS[colorIndex];
+  const color = getColors()[colorIndex];
   context.globalAlpha = alpha ?? 1;
-  context.fillStyle = color;
-  context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
-  // highlight
-  context.fillStyle = 'rgba(255,255,255,0.12)';
-  context.fillRect(x * size + 1, y * size + 1, size - 2, 4);
+
+  if (currentSkin === 'neon') {
+    context.shadowBlur = 10;
+    context.shadowColor = color;
+    context.fillStyle = color;
+    context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+    context.shadowBlur = 0;
+    context.shadowColor = 'transparent';
+  } else if (currentSkin === 'pastel') {
+    context.fillStyle = color;
+    context.globalAlpha = (alpha ?? 1) * 0.9;
+    context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+  } else if (currentSkin === 'pixel') {
+    context.fillStyle = color;
+    context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+    const savedAlpha = context.globalAlpha;
+    context.globalAlpha = 1;
+    context.fillStyle = 'rgba(0,0,0,0.25)';
+    const dot = Math.max(2, Math.floor(size / 6));
+    for (let pr = 0; pr < size - 2; pr += dot * 2)
+      for (let pc = 0; pc < size - 2; pc += dot * 2)
+        context.fillRect(x * size + 1 + pc, y * size + 1 + pr, dot, dot);
+    context.globalAlpha = savedAlpha;
+  } else {
+    context.fillStyle = color;
+    context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+    context.fillStyle = 'rgba(255,255,255,0.12)';
+    context.fillRect(x * size + 1, y * size + 1, size - 2, 4);
+  }
   context.globalAlpha = 1;
 }
 
@@ -314,9 +340,36 @@ function toggleTheme() {
   themeBtn.textContent = isLight ? '☀ Light' : '☾ Dark';
 }
 
+function updateSkinButtons() {
+  document.querySelectorAll('.skin-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.skin === currentSkin);
+  });
+}
+
+function setSkin(name) {
+  currentSkin = name;
+  localStorage.setItem('tetris-skin', name);
+  document.body.dataset.skin = name;
+  updateSkinButtons();
+  draw();
+  drawNext();
+}
+
 restartBtn.addEventListener('click', init);
 themeBtn.addEventListener('click', toggleTheme);
 
+document.querySelectorAll('.skin-btn').forEach(btn => {
+  btn.addEventListener('click', () => setSkin(btn.dataset.skin));
+});
+
 if (localStorage.getItem('theme') === 'light') toggleTheme();
 
+const savedSkin = localStorage.getItem('tetris-skin');
+if (savedSkin && SKIN_COLORS[savedSkin]) {
+  currentSkin = savedSkin;
+  document.body.dataset.skin = savedSkin;
+}
+
 init();
+
+updateSkinButtons();
