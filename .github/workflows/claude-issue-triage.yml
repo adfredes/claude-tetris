@@ -32,6 +32,8 @@ jobs:
             3. Explora el código fuente relevante (game.js, index.html, style.css)
                para entender el contexto del problema reportado.
             4. Publica UN comentario en ESPAÑOL con `gh issue comment ${{ github.event.issue.number }} --body "..."`.
+               El comentario debe estar escrito en Markdown válido que GitHub pueda renderizar correctamente
+               (usa encabezados ##, negritas **, listas -, bloques de código ``` y referencias a archivos con backticks).
                El comentario debe incluir:
                - **Tipo**: bug / mejora / pregunta / etc.
                - **Diagnóstico**: análisis del problema y causa raíz probable.
