@@ -166,6 +166,28 @@ kbd {
   align-items: center;
 }
 
+.overlay-section {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.overlay[data-mode="pause"] .overlay-pause {
+  display: flex;
+}
+
+.overlay[data-mode="gameover"] .overlay-gameover {
+  display: flex;
+}
+
+.overlay-title-pause {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--accent);
+}
+
 #overlay-title {
   font-size: 28px;
   font-weight: 800;
@@ -179,8 +201,8 @@ kbd {
   color: var(--accent);
 }
 
-#restart-btn {
-  margin-top: 8px;
+.overlay-box button {
+  margin-top: 4px;
   background: var(--accent);
   color: var(--bg-body);
   border: none;
@@ -191,10 +213,52 @@ kbd {
   cursor: pointer;
   letter-spacing: 1px;
   transition: background 0.15s;
+  width: 180px;
 }
 
-#restart-btn:hover {
+.overlay-box button:hover {
   background: var(--accent-hover);
+}
+
+.controls-list {
+  font-size: 12px;
+  color: var(--text-controls);
+}
+
+.controls-list.hidden {
+  display: none;
+}
+
+.controls-list ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.controls-list li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.level-selector {
+  font-size: 13px;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.level-selector select {
+  background: var(--kbd-bg);
+  color: var(--text-main);
+  border: 1px solid var(--kbd-border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 13px;
+  cursor: pointer;
 }
 
 /* ---- Theme toggle ---- */
