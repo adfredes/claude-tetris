@@ -215,3 +215,106 @@ kbd {
   color: var(--accent);
   border-color: var(--accent);
 }
+
+/* ---- High scores table ---- */
+#highscores {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+}
+
+#highscores th {
+  color: var(--text-label);
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-align: left;
+  padding: 2px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+#highscores td {
+  padding: 3px 4px;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60px;
+}
+
+#highscores td:last-child {
+  color: var(--accent);
+  text-align: right;
+}
+
+.current-record td {
+  color: var(--accent) !important;
+  font-weight: 700;
+}
+
+#reset-records-btn {
+  margin-top: 4px;
+  background: transparent;
+  color: var(--text-label);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+#reset-records-btn:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* ---- Name input in overlay ---- */
+#name-input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+#name-input-section p {
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+#player-name {
+  background: var(--bg-canvas);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--text-main);
+  text-align: center;
+  width: 160px;
+}
+
+#player-name:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+#save-score-btn {
+  background: var(--accent);
+  color: var(--bg-body);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+}
+
+#save-score-btn:hover {
+  background: var(--accent-hover);
+}
+
+.hidden {
+  display: none !important;
+}
