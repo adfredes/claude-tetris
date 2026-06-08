@@ -39,6 +39,7 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
+const themeBtn = document.getElementById('theme-toggle');
 
 let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
 
@@ -168,8 +169,12 @@ function drawBlock(context, x, y, colorIndex, size, alpha) {
   context.globalAlpha = 1;
 }
 
+function getGridColor() {
+  return document.body.dataset.theme === 'light' ? '#ccccdd' : '#22222e';
+}
+
 function drawGrid() {
-  ctx.strokeStyle = '#22222e';
+  ctx.strokeStyle = getGridColor();
   ctx.lineWidth = 0.5;
   for (let c = 1; c < COLS; c++) {
     ctx.beginPath();
@@ -299,6 +304,16 @@ document.addEventListener('keydown', e => {
   updateHUD();
 });
 
+function toggleTheme() {
+  const isLight = document.body.dataset.theme === 'light';
+  document.body.dataset.theme = isLight ? '' : 'light';
+  localStorage.setItem('theme', isLight ? 'dark' : 'light');
+  themeBtn.textContent = isLight ? '☀ Light' : '☾ Dark';
+}
+
 restartBtn.addEventListener('click', init);
+themeBtn.addEventListener('click', toggleTheme);
+
+if (localStorage.getItem('theme') === 'light') toggleTheme();
 
 init();
