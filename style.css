@@ -215,3 +215,39 @@ kbd {
   color: var(--accent);
   border-color: var(--accent);
 }
+
+/* ---- Skin selector ---- */
+#skin-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.skin-btn {
+  background: transparent;
+  color: var(--text-label);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.skin-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.skin-btn.active {
+  background: var(--accent);
+  color: var(--bg-body);
+  border-color: var(--accent);
+}
+
+[data-skin="neon"] #board,
+[data-skin="neon"] #next-canvas {
+  background: #000 !important;
+}
